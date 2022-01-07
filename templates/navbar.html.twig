@@ -1,0 +1,44 @@
+<!-- Navbar -->
+<nav
+	class="navbar navbar-expand-lg navbar-light bg-light">
+	<!-- Container wrapper -->
+	<div
+		class="container-fluid">
+		<!-- Toggle button -->
+		<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<i class="fas fa-bars"></i>
+		</button>
+
+		<!-- Left links -->
+		{# TODO : LOOP THROUGH MENU ITEMS #}
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path("home_page") }}"> {{ 'default.index.home'|trans}}
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path("shop_page") }}"> {{ 'default.index.shop'|trans}}
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path("contact_page") }}"> {{ 'default.index.contact'|trans}}
+				</a>
+			</li>
+		</ul>
+		<!-- Left links -->
+
+		<!-- Right elements -->
+		<div class="d-flex align-items-center">
+			{% for lang in supported_locales|split("|") %}
+				{# TODO : Language selection #}
+			{% endfor %}
+			<!-- Icon -->
+			<a class="text-reset me-3" href="#">
+				<i class="bi bi-cart3"></i>
+			</a>
+		</div>
+		<!-- Right elements -->
+	</div>
+	<!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

@@ -1,5 +1,20 @@
-hello_page:
-  path: /hello/{userName}
-  controller: App\Controller\DefaultController::hello
+# Home page
+home_page:
+  path: /
+  controller: App\Controller\DefaultController::index
+
+# Shopping page
+shop_page:
+  path: /{_locale}/shop
+  controller: App\Controller\DefaultController::shop
+  requirements:
+    _locale: '%app.supported_locales%'
   defaults:
-    userName: 'Anonyme'
+    _locale: 'en'
+
+# Contact page
+contact_page:
+  path: /{_locale}/contact
+  controller: App\Controller\DefaultController::contact
+  defaults:
+    _locale: 'en'

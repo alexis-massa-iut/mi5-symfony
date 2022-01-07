@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony" />
+        </header>
+        <body>
+            <trans-unit id="yi_J3BU" resname="default.index.home">
+                <source>default.index.home</source>
+                <target>Accueil</target>
+            </trans-unit>
+            <trans-unit id="tes" resname="default.index.shop">
+                <source>default.index.shop</source>
+                <target>Boutique</target>
+            </trans-unit>
+            <trans-unit id="yi_testestJ3BU" resname="default.index.contact">
+                <source>default.index.contact</source>
+                <target>Contact</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
