@@ -17,6 +17,14 @@
                 <source>default.index.contact</source>
                 <target>Contact</target>
             </trans-unit>
+            <trans-unit id="yi_testestfdsqfdJ3BU" resname="default.index.search">
+                <source>default.index.search</source>
+                <target>Rechercher..</target>
+            </trans-unit>
+            <trans-unit id="yi_teffdsdBU" resname="default.index.search_result">
+                <source>default.index.search_result</source>
+                <target>Résultats de recherche :</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

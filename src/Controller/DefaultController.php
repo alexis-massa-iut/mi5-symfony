@@ -21,10 +21,7 @@ class DefaultController extends AbstractController
     public function shop(ShopService $shopService)
     {
         $categories = $shopService->findAllCategories();
-        return $this->render(
-            'shop.html.twig',
-            ["categories" => $categories]
-        );
+        return $this->render('shop.html.twig', ["categories" => $categories]);
     }
 
     /**
@@ -33,5 +30,13 @@ class DefaultController extends AbstractController
     public function contact()
     {
         return $this->render('contact.html.twig');
+    }
+
+    /**
+     * Search page
+     */
+    public function search(String $search)
+    {
+        return $this->render('search.html.twig', ["search" => $search]);
     }
 }

@@ -1,7 +1,11 @@
 # Home page
 home_page:
-  path: /
+  path: /{_locale}
   controller: App\Controller\DefaultController::index
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: 'en'
 
 # Shopping page
 shop_page:
@@ -18,3 +22,11 @@ contact_page:
   controller: App\Controller\DefaultController::contact
   defaults:
     _locale: 'en'
+
+# Search page
+search_page:
+  path: /{_locale}/shop/search/{search}
+  controller: App\Controller\DefaultController::search
+  defaults:
+    _locale: 'en'
+    search: ''
