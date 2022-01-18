@@ -35,8 +35,9 @@ class DefaultController extends AbstractController
     /**
      * Search page
      */
-    public function search(String $search)
+    public function search(ShopService $shopService, String $search)
     {
-        return $this->render('search.html.twig', ["search" => $search]);
+        $products = $shopService->findProduitsBynameOrtext($search);
+        return $this->render('search.html.twig', ["search" => $search, "products" => $products]);
     }
 }

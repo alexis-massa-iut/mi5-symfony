@@ -7,7 +7,6 @@
 		class="container-fluid">
 		<!-- Toggle button -->
 		<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			²
 			<i class="fas fa-bars"></i>
 		</button>
 
@@ -42,15 +41,15 @@
 			{% for lang in supported_locales|split("|") %}
 				{# Check if different from current language #}
 				{% if lang != app.request.attributes.get('_locale') %}
-					<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': lang})) }}">
-						<img src="{{asset('img/'~lang~'.png')}}" alt="{{lang}}">
+					<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': lang})) }}">
+						<img src="{{asset('img/locales/'~lang~'.png')}}" alt="{{lang}}">
 					</a>
 				{% endif %}
 			{% endfor %}
 
 			<!-- Search bar -->
-			<form id="search-form" method="GET" action="{{ path('search_page')}}">
-				<input type="text" placeholder="{{ 'default.index.search'|trans }}" name="search">
+			<form id="search-form" onsubmit="return processForm()">
+				<input id="search-text" type="text" placeholder="{{ 'default.index.search'|trans }}" name="search">
 				<button type="submit">
 					<i class="bi bi-search"></i>
 				</button>
