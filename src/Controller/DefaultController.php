@@ -16,12 +16,22 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * Shoppping page
+     * Shoppping index
      */
-    public function shop(ShopService $shopService)
+    public function shopIndex(ShopService $shopService)
     {
         $categories = $shopService->findAllCategories();
-        return $this->render('shop.html.twig', ["categories" => $categories]);
+        return $this->render('shop-index.html.twig', ["categories" => $categories]);
+    }
+
+    /**
+     * Shoppping categorie
+     */
+    public function shopCateg(ShopService $shopService, int $categorie)
+    {
+        $categ = $shopService->findCategorieById($categorie);
+        $products = $shopService->findProduitsByCategorie($categorie);
+        return $this->render('shop-categ.html.twig', ["categorie" => $categ, "products" => $products]);
     }
 
     /**

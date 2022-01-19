@@ -7,21 +7,24 @@ home_page:
   defaults:
     _locale: 'en'
 
-# Shopping page
-shop_page:
+# Shop home
+shop_index:
   path: /{_locale}/shop
-  controller: App\Controller\DefaultController::shop
+  controller: App\Controller\DefaultController::shopIndex
   requirements:
     _locale: '%app.supported_locales%'
   defaults:
     _locale: 'en'
 
-# Contact page
-contact_page:
-  path: /{_locale}/contact
-  controller: App\Controller\DefaultController::contact
+# Shop categorie
+shop_categ:
+  path: /{_locale}/shop/{categorie}
+  controller: App\Controller\DefaultController::shopCateg
+  requirements:
+    _locale: '%app.supported_locales%'
   defaults:
     _locale: 'en'
+    categorie: 0
 
 # Search page
 search_page:
@@ -30,3 +33,10 @@ search_page:
   defaults:
     _locale: 'en'
     search: ''
+
+# Contact page
+contact_page:
+  path: /{_locale}/contact
+  controller: App\Controller\DefaultController::contact
+  defaults:
+    _locale: 'en'
