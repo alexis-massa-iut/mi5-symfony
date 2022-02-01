@@ -27,20 +27,20 @@ class ShopService
         return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;
     }
 
-    // renvoie le produits dont id == $idProduit
-    public function findProduitById(int $idProduit)
+    // renvoie le produits dont id == $idProduct
+    public function findProductById(int $idProduct)
     {
         $res = array_filter(
             $this->produits,
-            function ($p) use ($idProduit) {
-                return $p["id"] == $idProduit;
+            function ($p) use ($idProduct) {
+                return $p["id"] == $idProduct;
             }
         );
         return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;
     }
 
     // renvoie tous les produits dont idCategorie == $idCategorie
-    public function findProduitsByCategorie(int $idCategorie)
+    public function findProductsByCategorie(int $idCategorie)
     {
         return array_filter(
             $this->produits,
@@ -51,7 +51,7 @@ class ShopService
     }
 
     // renvoie tous les produits dont name ou text contient $search
-    public function findProduitsBynameOrtext(string $search)
+    public function findProductsBynameOrtext(string $search)
     {
         return array_filter(
             $this->produits,

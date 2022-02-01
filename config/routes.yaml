@@ -7,7 +7,8 @@ home_page:
   defaults:
     _locale: 'en'
 
-# Shop home
+######     SHOP ROUTES     #####
+# index
 shop_index:
   path: /{_locale}/shop
   controller: App\Controller\DefaultController::shopIndex
@@ -16,7 +17,7 @@ shop_index:
   defaults:
     _locale: 'en'
 
-# Shop categorie
+# categorie
 shop_categ:
   path: /{_locale}/shop/{categorie}
   controller: App\Controller\DefaultController::shopCateg
@@ -26,10 +27,58 @@ shop_categ:
     _locale: 'en'
     categorie: 0
 
+######     CART ROUTES     #####
+# index
+# shop_index:
+#   path: /{_locale}/cart/
+#   controller: App\Controller\CartController::cartIndex
+#   requirements:
+#     _locale: '%app.supported_locales%'
+#   defaults:
+#     _locale: 'en'
+
+# # TODO : add
+# shop_index:
+#   path: /{_locale}/cart/add/{idProduct}/{amount}
+#   controller: App\Controller\CartController::cartAdd
+#   requirements:
+#     _locale: '%app.supported_locales%'
+#   defaults:
+#     _locale: 'en'
+
+# # TODO : remove
+# shop_index:
+#   path: /{_locale}/cart/remove/{idProduct}/{amount}
+#   controller: App\Controller\CartController::cartRemove
+#   requirements:
+#     _locale: '%app.supported_locales%'
+#   defaults:
+#     _locale: 'en'
+
+# # TODO : delete
+# shop_index:
+#   path: /{_locale}/cart/delete/{idProduct}
+#   controller: App\Controller\CartController::cartDelete
+#   requirements:
+#     _locale: '%app.supported_locales%'
+#   defaults:
+#     _locale: 'en'
+
+# # TODO : empty
+# shop_index:
+#   path: /{_locale}/cart/empty
+#   controller: App\Controller\CartController::cartEmpty
+#   requirements:
+#     _locale: '%app.supported_locales%'
+#   defaults:
+#     _locale: 'en'
+
 # Search page
 search_page:
   path: /{_locale}/shop/search/{search}
   controller: App\Controller\DefaultController::search
+  requirements:
+    _locale: '%app.supported_locales%'
   defaults:
     _locale: 'en'
     search: ''

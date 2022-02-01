@@ -30,7 +30,7 @@ class DefaultController extends AbstractController
     public function shopCateg(ShopService $shopService, int $categorie)
     {
         $categ = $shopService->findCategorieById($categorie);
-        $products = $shopService->findProduitsByCategorie($categorie);
+        $products = $shopService->findProductsByCategorie($categorie);
         return $this->render('shop-categ.html.twig', ["categorie" => $categ, "products" => $products]);
     }
 
@@ -47,7 +47,7 @@ class DefaultController extends AbstractController
      */
     public function search(ShopService $shopService, String $search)
     {
-        $products = $shopService->findProduitsBynameOrtext($search);
+        $products = $shopService->findProductsBynameOrtext($search);
         return $this->render('search.html.twig', ["search" => $search, "products" => $products]);
     }
 }
