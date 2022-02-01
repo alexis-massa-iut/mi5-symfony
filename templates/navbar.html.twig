@@ -48,11 +48,11 @@
 			{% endfor %}
 
 			<!-- Search bar -->
-			<form id="search-form" onsubmit="return processForm()">
+			<form id="search-form" onsubmit="return processForm('{{path('search_page', {'_locale': app.request.attributes.get('_locale')})}}')">
 				<input id="search-text" type="text" placeholder="{{ 'default.index.search'|trans }}" name="search">
 				<button type="submit">
 					<i class="bi bi-search"></i>
-				</button>
+				</button> 
 			</form>
 
 

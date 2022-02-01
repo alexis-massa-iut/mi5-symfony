@@ -1,11 +1,13 @@
 <?php
-//  Controller/DefaultController.php
+//  Controller/ShopController.php
 namespace App\Controller;
 
-use App\Service\ShopService;
+use App\Entity\Category;
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DefaultController extends AbstractController
+class ShopController extends AbstractController
 {
     /**
      * Home page
@@ -18,19 +20,19 @@ class DefaultController extends AbstractController
     /**
      * Shoppping index
      */
-    public function shopIndex(ShopService $shopService)
+    public function shopIndex(EntityManagerInterface $em)
     {
-        $categories = $shopService->findAllCategories();
+        $categories = $em->getRepository(Category::class)->findAll();
         return $this->render('shop-index.html.twig', ["categories" => $categories]);
     }
 
     /**
      * Shoppping categorie
      */
-    public function shopCateg(ShopService $shopService, int $categorie)
+    public function shopCateg(EntityManagerInterface $em, int $category)
     {
-        $categ = $shopService->findCategorieById($categorie);
-        $products = $shopService->findProductsByCategorie($categorie);
+        $categ = $em->getRepository(Category::class)->find($category);
+        $products = $categ->getProducts();
         return $this->render('shop-categ.html.twig', ["categorie" => $categ, "products" => $products]);
     }
 
@@ -45,9 +47,9 @@ class DefaultController extends AbstractController
     /**
      * Search page
      */
-    public function search(ShopService $shopService, String $search)
+    public function search(EntityManagerInterface $em, String $search)
     {
-        $products = $shopService->findProductsBynameOrtext($search);
+        $products =$em->getRepository(Product::class)->findBySearch($search);
         return $this->render('search.html.twig', ["search" => $search, "products" => $products]);
     }
 }

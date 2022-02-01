@@ -1,6 +1,6 @@
-function processForm() {
+function processForm(url) {
     // Go to URL/search
     search = document.getElementById("search-text").value;
-    window.location.replace(`http://127.0.0.1:8000/shop/search/${search}`);
+    window.location.replace(url + '/' + search);
     return false;
 }

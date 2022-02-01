@@ -1,7 +1,7 @@
 # Home page
 home_page:
   path: /{_locale}
-  controller: App\Controller\DefaultController::index
+  controller: App\Controller\ShopController::index
   requirements:
     _locale: '%app.supported_locales%'
   defaults:
@@ -11,21 +11,21 @@ home_page:
 # index
 shop_index:
   path: /{_locale}/shop
-  controller: App\Controller\DefaultController::shopIndex
+  controller: App\Controller\ShopController::shopIndex
   requirements:
     _locale: '%app.supported_locales%'
   defaults:
     _locale: 'en'
 
-# categorie
+# category
 shop_categ:
-  path: /{_locale}/shop/{categorie}
-  controller: App\Controller\DefaultController::shopCateg
+  path: /{_locale}/shop/{category}
+  controller: App\Controller\ShopController::shopCateg
   requirements:
     _locale: '%app.supported_locales%'
   defaults:
     _locale: 'en'
-    categorie: 0
+    category: 0
 
 ######     CART ROUTES     #####
 # index
@@ -76,7 +76,7 @@ shop_categ:
 # Search page
 search_page:
   path: /{_locale}/shop/search/{search}
-  controller: App\Controller\DefaultController::search
+  controller: App\Controller\ShopController::search
   requirements:
     _locale: '%app.supported_locales%'
   defaults:
@@ -86,6 +86,6 @@ search_page:
 # Contact page
 contact_page:
   path: /{_locale}/contact
-  controller: App\Controller\DefaultController::contact
+  controller: App\Controller\ShopController::contact
   defaults:
     _locale: 'en'
