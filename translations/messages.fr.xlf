@@ -25,6 +25,10 @@
                 <source>default.index.search_result</source>
                 <target>Résultats de recherche :</target>
             </trans-unit>
+            <trans-unit id="yi_tefdsqadBU" resname="default.index.home_message">
+                <source>default.index.home_message</source>
+                <target>Ceci est la page d'accueil et ce message se traduit dans les autres langues.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

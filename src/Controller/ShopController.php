@@ -27,13 +27,13 @@ class ShopController extends AbstractController
     }
 
     /**
-     * Shoppping categorie
+     * Shoppping category
      */
     public function shopCateg(EntityManagerInterface $em, int $category)
     {
         $categ = $em->getRepository(Category::class)->find($category);
         $products = $categ->getProducts();
-        return $this->render('shop-categ.html.twig', ["categorie" => $categ, "products" => $products]);
+        return $this->render('shop-categ.html.twig', ["category" => $categ, "products" => $products]);
     }
 
     /**
@@ -49,7 +49,7 @@ class ShopController extends AbstractController
      */
     public function search(EntityManagerInterface $em, String $search)
     {
-        $products =$em->getRepository(Product::class)->findBySearch($search);
+        $products = $em->getRepository(Product::class)->findBySearch($search);
         return $this->render('search.html.twig', ["search" => $search, "products" => $products]);
     }
 }
