@@ -28,51 +28,54 @@ shop_categ:
     category: 0
 
 ######     CART ROUTES     #####
-# index
-# shop_index:
-#   path: /{_locale}/cart/
-#   controller: App\Controller\CartController::cartIndex
-#   requirements:
-#     _locale: '%app.supported_locales%'
-#   defaults:
-#     _locale: 'en'
+# cart
+cart_index:
+  path: /{_locale}/cart/
+  controller: App\Controller\CartController::cartIndex
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: 'en'
 
-# # TODO : add
-# shop_index:
-#   path: /{_locale}/cart/add/{idProduct}/{amount}
-#   controller: App\Controller\CartController::cartAdd
-#   requirements:
-#     _locale: '%app.supported_locales%'
-#   defaults:
-#     _locale: 'en'
+# add
+cart_add:
+  path: /{_locale}/cart/add/{idProduct}/{amount}
+  controller: App\Controller\CartController::cartAdd
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    idProduct: 0
+    amount: 0
+    _locale: 'en'
 
-# # TODO : remove
-# shop_index:
-#   path: /{_locale}/cart/remove/{idProduct}/{amount}
-#   controller: App\Controller\CartController::cartRemove
-#   requirements:
-#     _locale: '%app.supported_locales%'
-#   defaults:
-#     _locale: 'en'
+# remove
+cart_remove:
+  path: /{_locale}/cart/remove/{idProduct}/{amount}
+  controller: App\Controller\CartController::cartRemove
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: 'en'
 
-# # TODO : delete
-# shop_index:
-#   path: /{_locale}/cart/delete/{idProduct}
-#   controller: App\Controller\CartController::cartDelete
-#   requirements:
-#     _locale: '%app.supported_locales%'
-#   defaults:
-#     _locale: 'en'
+# delete
+cart_delete:
+  path: /{_locale}/cart/delete/{idProduct}
+  controller: App\Controller\CartController::cartDelete
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: 'en'
 
-# # TODO : empty
-# shop_index:
-#   path: /{_locale}/cart/empty
-#   controller: App\Controller\CartController::cartEmpty
-#   requirements:
-#     _locale: '%app.supported_locales%'
-#   defaults:
-#     _locale: 'en'
+# empty
+cart_empty:
+  path: /{_locale}/cart/empty
+  controller: App\Controller\CartController::cartEmpty
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: 'en'
 
+######     GENERAL     #####
 # Search page
 search_page:
   path: /{_locale}/shop/search/{search}

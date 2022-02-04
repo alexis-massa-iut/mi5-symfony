@@ -11,7 +11,7 @@
 						<h5 class="card-title">{{ product.name}}</h5>
 						<p class="card-text">{{product.text}}</p>
 						<p class="card-text">{{product.price}}€</p>
-						<a href="#" class="btn btn-primary">Acheter</a>
+						<a href="{{ path('cart_add', {'idProduct': product.id, 'amount': 1}) }}" class="btn btn-primary">Ajouter au panier</a>
 					</div>
 				</div>
 			{% endfor %}
