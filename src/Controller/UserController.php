@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/{_locale}/user', requirements: ["_locale" => "%app.supported_locales%"])]
+#[Route('/{_locale}/user', requirements: ['_locale' => '%app.supported_locales%'])]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'user_index', methods: ['GET'])]
@@ -41,4 +41,5 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
 }
