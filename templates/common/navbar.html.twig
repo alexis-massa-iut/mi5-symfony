@@ -54,6 +54,24 @@
 					<i class="bi bi-search"></i>
 				</button>
 			</form>
+			<!-- LOGIN / LOGOUT -->
+			{% if app.user %}
+				<a class="nav-link" href="{{ path('user_index') }}">
+					<button type="button" class="btn btn-light">Account</button>
+				</a>
+				{# TODO LOGOUT #}
+				{# <a class="nav-link" href="{{ path('user_new') }}"> #}
+				<button type="button" class="btn btn-light">Logout</button>
+				{# </a> #}
+			{% else %}
+				{# TODO LOGIN #}
+				{# <a class="nav-link" href="{{ path('user_new') }}"> #}
+					<button type="button" class="btn btn-light"> Login</button>
+				{# </a> #}
+				<a class="nav-link" href="{{ path('user_new') }}">
+					<button type="button" class="btn btn-light">Sign up</button>
+				</a>
+			{% endif %}
 
 
 		</div>
