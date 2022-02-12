@@ -4,18 +4,20 @@ namespace App\Controller;
 
 use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+use function PHPUnit\Framework\isNull;
 
 class CartController extends AbstractController
 {
     /**
      * Cart page
      */
-    public function cartIndex(EntityManagerInterface $em, CartService $cs)
+    public function cartIndex(CartService $cs)
     {
-        $content = $cs->getContent($em);
-        $total = $cs->getTotal($em);
+        $content = $cs->getContent();
+        $total = $cs->getTotal();
         return $this->render('cart/index.html.twig', ["content" => $content, "total" => $total]);
     }
 
@@ -63,5 +65,22 @@ class CartController extends AbstractController
         $this->addFlash('success', 'Panier vidé');
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
+    }
+
+    /**
+     * Checkout cart
+     */
+    public function cartCheckout(CartService $cs, Request $request, $idUser)
+    {
+        // TODO : get current User
+        $res = $cs->cartToCommand($idUser);
+        if (isNull($res)) { // Panier vide
+            $this->addFlash('warning', 'Panier vide, aucune commande créée');
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+        } else {
+            $this->addFlash('success', 'Commande créée');
+            return $this->render('command/index.html.twig', []);
+        }
     }
 }

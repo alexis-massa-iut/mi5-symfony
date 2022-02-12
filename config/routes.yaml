@@ -75,6 +75,16 @@ cart_empty:
   defaults:
     _locale: 'en'
 
+# checkout (convert to command)
+cart_checkout:
+  path: /{_locale}/cart/{idUser}
+  controller: App\Controller\CartController::cartCheckout
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    idUser: 0
+    _locale: 'en'
+
 ######     GENERAL     #####
 # Search page
 search_page:
