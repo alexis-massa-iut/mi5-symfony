@@ -11,12 +11,7 @@
 				<th>Password</th>
 				<th>Name</th>
 				<th>Lastname</th>
-				<th>
-				{# LOGOUT #}
-					<a href="{{ path('app_logout') }}">
-						<button type="button" class="btn btn-primary">Logout</button>
-					</a>
-				</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,6 +23,8 @@
 					<td>{{ user.password }}</td>
 					<td>{{ user.name }}</td>
 					<td>{{ user.lastname }}</td>
+					<td> {{ include('user/_delete_form.html.twig') }}
+					</td>
 				</tr>
 			{% else %}
 				<tr>
@@ -37,5 +34,7 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('user_new') }}">Create new</a>
+	<a href="{{ path('user_new') }}">
+		<button class="btn btn-light">Create new</button>
+	</a>
 {% endblock %}
