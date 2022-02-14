@@ -1,40 +1,47 @@
 {% extends "common/base.html.twig" %}
+
+{% block name %}
+	User list
+{% endblock %}
 {% block body %}
 	<h1>User index</h1>
+	<a href="{{ path('user_new') }}">
+		<button class="btn btn-light">Create new</button>
+	</a>
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Email</th>
-				<th>Roles</th>
-				<th>Password</th>
+				<th>Email(login)</th>
 				<th>Name</th>
 				<th>Lastname</th>
+				<th>Roles</th>
+				<th>Password</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for user in users %}
 				<tr>
-					<td>{{ user.id }}</td>
-					<td>{{ user.email }}</td>
-					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-					<td>{{ user.password }}</td>
-					<td>{{ user.name }}</td>
-					<td>{{ user.lastname }}</td>
-					<td> {{ include('user/_delete_form.html.twig') }}
+					<td class="align-middle">{{ user.id }}</td>
+					<td class="align-middle">{{ user.email }}</td>
+					<td class="align-middle">{{ user.name }}</td>
+					<td class="align-middle">{{ user.lastname }}</td>
+					<td class="align-middle">{{ user.roles ? user.roles|json_encode : '' }}</td>
+					<td class="align-middle">{{ user.password }}</td>
+					<td class="align-middle">
+						<button class="btn btn-light" onclick="location.href='{{ path('user_edit', {'id': user.id}) }}'">
+							<i class="bi bi-pencil-square"></i>Edit</button> {{ include('user/_delete_form.html.twig') }}
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="7">no records found</td>
+					<td colspan="7">No users found</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('user_new') }}">
-		<button class="btn btn-light">Create new</button>
-	</a>
+
 {% endblock %}
