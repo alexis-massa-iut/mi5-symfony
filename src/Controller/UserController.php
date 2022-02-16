@@ -16,26 +16,30 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $ur): Response
     {
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $ur->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($ur->findOneBy(['user' => $user])) {
+                $this->addFlash('error', 'Email already used');
+                return $this->redirect($request->headers->get('referer'));
+            }
             $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
-            $user->setRoles(["ROLE_USER"]);
-            $ur->persist($user);
-            $ur->flush();
+            $user->setPassword($hashedPassword)
+                ->setRoles(["ROLE_USER"]);
+            $em->persist($user);
+            $em->flush();
 
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
@@ -47,13 +51,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $ur): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ur->flush();
+            $em->flush();
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,22 +68,22 @@ class UserController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, UserRepository $ur): Response
+    public function delete(Request $request, User $user, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $ur->remove($user);
-            $ur->flush();
+            $em->remove($user);
+            $em->flush();
         }
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/account', name: 'account', methods: ['GET'])]
-    public function account(UserRepository $userRepository): Response
+    public function account(UserRepository $ur): Response
     {
-        $user = $this->getUser();
+        $user_id = $this->getUser()->getUserIdentifier();
         return $this->render('user/account.html.twig', [
-            'user' => $userRepository->findOneBy(['email'=> $user->getUserIdentifier()]),
+            'user' => $ur->findOneBy(['email' => $user_id]),
         ]);
     }
 }

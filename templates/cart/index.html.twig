@@ -27,7 +27,7 @@
 						<a href="{{ path('cart_add', {'idProduct': item.product.id, 'amount': 1}) }}" class="btn btn-primary">+</a>
 					</td>
 					<td class="align-middle">
-						<a href="{{ path('cart_delete', {'idProduct': item.product.id}) }}" class="btn btn-primary">Supprimer</a>
+						<a href="{{ path('cart_delete', {'idProduct': item.product.id}) }}" class="btn btn-primary">Delete</a>
 					</td>
 				</tr>
 			{% endfor %}
@@ -40,10 +40,9 @@
 				<td>{{ total }}€</td>
 				<td>
 					{% if app.user %}
-						<a href="{{path('cart_checkout', {'idUser': app.user.id }) }}" class="btn btn-primary">Passer commande</a>
+						<a href="{{path('cart_checkout', {'idUser': app.user.id }) }}" class="btn btn-primary">Checkout</a>
 					{% else %}
-					{# TODO : LOGIN #}
-						{# <a href="{{path('user_login')}}" class="btn btn-primary" disabled>Passer commande</a> #}
+						<a href="{{path('app_login')}}" class="btn btn-primary">Login to checkout</a>
 					{% endif %}
 				</td>
 			</tr>

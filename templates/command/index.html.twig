@@ -1,0 +1,27 @@
+{% block body %}
+	<h1>All your commands:</h1>
+s
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for command in commands %}
+				<tr>
+					<td>{{ command.id }}</td>
+					<td>{{ command.date ? command.date|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ command.status }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

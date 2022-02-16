@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use function PHPUnit\Framework\isNull;
 
@@ -29,8 +28,7 @@ class CartController extends AbstractController
         if (!($idProduct == 0 && $amount == 0)) {
             $cs->addProduct($idProduct, $amount);
             $this->addFlash('success', 'Ajouté au panier');
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+            return $this->redirect($request->headers->get('referer'));
         }
     }
 
@@ -41,8 +39,8 @@ class CartController extends AbstractController
     {
         $cs->removeProduct($idProduct, $amount);
         $this->addFlash('success', 'Retiré du panier');
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        return $this->redirect($request->headers->get('referer'));
+
     }
 
     /**
@@ -52,8 +50,8 @@ class CartController extends AbstractController
     {
         $cs->deleteProduct($idProduct);
         $this->addFlash('success', 'Supprimé du panier');
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        return $this->redirect($request->headers->get('referer'));
+
     }
 
     /**
@@ -63,8 +61,8 @@ class CartController extends AbstractController
     {
         $cs->empty();
         $this->addFlash('success', 'Panier vidé');
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        return $this->redirect($request->headers->get('referer'));
+
     }
 
     /**
@@ -72,12 +70,10 @@ class CartController extends AbstractController
      */
     public function cartCheckout(CartService $cs, Request $request, $idUser)
     {
-        // TODO : get current User
-        $res = $cs->cartToCommand($idUser);
+        $res = $cs->cartToCommand($idUser); // convert to command
         if (isNull($res)) { // Panier vide
             $this->addFlash('warning', 'Panier vide, aucune commande créée');
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+            return $this->redirect($request->headers->get('referer'));
         } else {
             $this->addFlash('success', 'Commande créée');
             return $this->render('command/index.html.twig', []);

@@ -7,6 +7,7 @@ use App\Controller\ShopController;
 use App\Entity\Command;
 use App\Entity\CommandLine;
 use App\Entity\Product;
+use App\Entity\User;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +20,10 @@ class CartService
     private $session; // Session service
     private $shop; // Shop service
     private $cart; // Associative array idProduct => amount
+    private $em; // EntityManager
     // so $this->cart[$i] = amount of product with id = $i
     // Constructor
-public function __construct(SessionInterface $session, ShopController $shop, EntityManagerInterface $em)
+    public function __construct(SessionInterface $session, ShopController $shop, EntityManagerInterface $em)
     {
         // Get shop and session service
         $this->shop = $shop;
@@ -148,16 +150,31 @@ public function __construct(SessionInterface $session, ShopController $shop, Ent
     public function cartToCommand($idUser): ?Command
     {
         $this->getCart(); //Update cart content
-        
+
         if (empty($this->cart)) return null; // abort if cart is empty
 
         $command = new Command();
-        $command->setDate(new DateTime('now', new DateTimeZone('Europe/Paris')))->setUser($this->em->getRepository(User::class)->find($idUser)); // Add datetime and user to command
+        $command->setDate(new DateTime('now', new DateTimeZone('Europe/Paris'))) // Add datetime
+            ->setUser($this->em->getRepository(User::class)->find(($idUser))) // Add user
+            ->setStatus("Pending"); // Add status "waiting for confirmation"
+
+        $this->em->persist($command); // Persist command
+        $this->em->flush();
+
         foreach ($this->cart as $id => $amount) { // add all cart items as commandlines
             $cl = new CommandLine();
-            $cl->setProduct($this->em->getRepository(Product::class)->find($id))->setAmount($amount);
-            $command->addCommandLine($cl);
+            $product = $this->em->getRepository(Product::class)->find($id); // Get product
+            $cl->setCommand($command) //Add Command
+                ->setProduct($product) //Add Product
+                ->setAmount($amount)
+                ->setPrice($product->getPrice() * $amount); // Add price
+
+            $this->em->persist($cl); // Persist commandLine
+            $this->em->flush();
+
+            $command->addCommandLine($cl); // Add commandLine to Command
         }
+
         return $command;
     }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<title>Command</title>
+
+{% block body %}
+	<h1>Command</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ command.id }}</td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td>{{ command.date ? command.date|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>{{ command.status }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<h2>Products:
+	</h2> {{ include('command_line/index.html.twig', {'commandlines': command.command_lines}) }}
+
+{% endblock %}

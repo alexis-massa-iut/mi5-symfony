@@ -68,10 +68,17 @@
 			</form>
 			<!-- LOGIN / LOGOUT -->
 			{% if app.user %}
-				{# TODO ACCOUNT INDEX #}
-				<a class="nav-link" href="{{ path('account') }}">
-					<button type="button" class="btn btn-light">Account: {{ app.user.name }}</button>
-				</a>
+				<!-- Account links -->
+					<li class="nav-item"> <div class="dropdown show">
+						<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Account: {{ app.user.name }}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" href="{{ path('account') }}">Profile</a>
+							<a class="dropdown-item" href="{{ path('command_index') }}">Commands</a>
+						</div>
+					</div>
+				</li>
 				{# LOGOUT #}
 				<a class="nav-link" href="{{ path('app_logout') }}">
 					<button type="button" class="btn btn-light">Logout</button>

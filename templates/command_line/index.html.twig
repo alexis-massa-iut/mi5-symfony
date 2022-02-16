@@ -1,0 +1,22 @@
+{% block body %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for command_line in command_lines %}
+				<tr>
+					<td>{{ command_line.amount }}</td>
+					<td>{{ command_line.price }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
