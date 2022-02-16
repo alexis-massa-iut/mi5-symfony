@@ -24,7 +24,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, UserRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -34,8 +34,8 @@ class UserController extends AbstractController
             $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hashedPassword);
             $user->setRoles(["ROLE_USER"]);
-            $em->persist($user);
-            $em->flush();
+            $ur->persist($user);
+            $ur->flush();
 
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
@@ -47,13 +47,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $em): Response
+    public function edit(Request $request, User $user, UserRepository $ur): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $ur->flush();
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,13 +64,22 @@ class UserController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $em): Response
+    public function delete(Request $request, User $user, UserRepository $ur): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $em->remove($user);
-            $em->flush();
+            $ur->remove($user);
+            $ur->flush();
         }
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/account', name: 'account', methods: ['GET'])]
+    public function account(UserRepository $userRepository): Response
+    {
+        $user = $this->getUser();
+        return $this->render('user/account.html.twig', [
+            'user' => $userRepository->findOneBy(['email'=> $user->getUserIdentifier()]),
+        ]);
     }
 }

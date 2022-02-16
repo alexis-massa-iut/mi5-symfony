@@ -10,6 +10,9 @@
 	<div class="col"> {{ form_row(form.email) }}</div>
 	<div class="col"> {{ form_row(form.password) }}</div>
 </div>
+{% if not role_access %}
+	(Accessible par question de simplicité)
+{% endif %}
 <div class="row">
 	<div class="col"> {{ form_row(form.roles) }}</div>
 </div>
