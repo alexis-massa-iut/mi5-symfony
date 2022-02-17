@@ -1,11 +1,10 @@
 {% extends "common/base.html.twig" %}
 
-{% block name %}
-	User list
+{% block title %}
+	User account
 {% endblock %}
 {% block body %}
-	<h1>User
-	</h1>
+	<h1>My account</h1>
 
 	<table class="table">
 		<thead>
@@ -34,8 +33,6 @@
 				<td>Actions:</td>
 				<td class="align-middle">{{ include('user/_delete_form.html.twig') }}</td>
 			</tr>
-			<button class="btn btn-light" onclick="location.href='{{ path('user_edit', {'id': user.id}) }}'">
-				<i class="bi bi-pencil-square"></i>Edit</button> {{ include('user/_delete_form.html.twig') }}
 		</tbody>
 	</td>
 </tbody></table>{% endblock %}

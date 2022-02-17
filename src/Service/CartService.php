@@ -175,6 +175,8 @@ class CartService
             $command->addCommandLine($cl); // Add commandLine to Command
         }
 
+        // TODO : send confirmation email ?
+
         return $command;
     }
 }

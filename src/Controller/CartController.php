@@ -40,7 +40,6 @@ class CartController extends AbstractController
         $cs->removeProduct($idProduct, $amount);
         $this->addFlash('success', 'Retiré du panier');
         return $this->redirect($request->headers->get('referer'));
-
     }
 
     /**
@@ -51,7 +50,6 @@ class CartController extends AbstractController
         $cs->deleteProduct($idProduct);
         $this->addFlash('success', 'Supprimé du panier');
         return $this->redirect($request->headers->get('referer'));
-
     }
 
     /**
@@ -62,7 +60,6 @@ class CartController extends AbstractController
         $cs->empty();
         $this->addFlash('success', 'Panier vidé');
         return $this->redirect($request->headers->get('referer'));
-
     }
 
     /**
@@ -71,12 +68,13 @@ class CartController extends AbstractController
     public function cartCheckout(CartService $cs, Request $request, $idUser)
     {
         $res = $cs->cartToCommand($idUser); // convert to command
-        if (isNull($res)) { // Panier vide
+        if ($res === null) { // Panier vide
             $this->addFlash('warning', 'Panier vide, aucune commande créée');
             return $this->redirect($request->headers->get('referer'));
         } else {
             $this->addFlash('success', 'Commande créée');
-            return $this->render('command/index.html.twig', []);
+            $cs->empty();
+            return $this->redirectToRoute('user_commands');
         }
     }
 }

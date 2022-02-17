@@ -69,12 +69,13 @@
 			<!-- LOGIN / LOGOUT -->
 			{% if app.user %}
 				<!-- Account links -->
-					<li class="nav-item"> <div class="dropdown show">
+				<li class="nav-item">
+					<div class="dropdown show">
 						<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Account: {{ app.user.name }}
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<a class="dropdown-item" href="{{ path('account') }}">Profile</a>
+							<a class="dropdown-item" href="{{ path('user_account') }}">Profile</a>
 							<a class="dropdown-item" href="{{ path('command_index') }}">Commands</a>
 						</div>
 					</div>

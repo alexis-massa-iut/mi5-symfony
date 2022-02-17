@@ -1,20 +1,29 @@
+{% extends "common/base.html.twig" %}
+{% block title %}My commands
+{% endblock %}
 {% block body %}
+	<script src="{{ asset("js/command.js") }}"></script>
+	<style src="{{ asset("style/command.css") }}"></style>
 	<h1>All your commands:</h1>
-s
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
 				<th>Date</th>
 				<th>Status</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for command in commands %}
-				<tr>
+				<tr style="border: 2px solid black;">
 					<td>{{ command.id }}</td>
 					<td>{{ command.date ? command.date|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ command.status }}</td>
+					<td>
+						<button class="btn btn-light" onclick="location.href='{{ path('user_command', {'id': command.id}) }}'">
+							<i class="bi bi-pencil-square"></i>See</button>
+					</td>
 				</tr>
 			{% else %}
 				<tr>
@@ -22,6 +31,5 @@ s
 				</tr>
 			{% endfor %}
 		</tbody>
-	</table>
-
-{% endblock %}
+	</tbody>
+</table>{% endblock %}

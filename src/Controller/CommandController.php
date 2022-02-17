@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/{_locale}/user/command', requirements: ['_locale' => '%app.supported_locales%'])]
+#[Route('/{_locale}/command', requirements: ['_locale' => '%app.supported_locales%'])]
 class CommandController extends AbstractController
 {
     #[Route('/', name: 'command_index', methods: ['GET'])]

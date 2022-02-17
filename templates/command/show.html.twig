@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-
-<title>Command</title>
-
+{% extends "common/base.html.twig" %}
+{% block title %}Command: {{ command.date ? command.date|date('Y-m-d H:i:s') : '' }}
+{% endblock %}
 {% block body %}
-	<h1>Command</h1>
 
 	<table class="table">
+		<h2>Command:
+		</h2>
 		<tbody>
 			<tr>
 				<th>Id</th>
@@ -22,6 +22,6 @@
 		</tbody>
 	</table>
 	<h2>Products:
-	</h2> {{ include('command_line/index.html.twig', {'commandlines': command.command_lines}) }}
+	</h2> {{ include('command_line/index.html.twig', {'commandlines': command_lines}) }}
 
 {% endblock %}

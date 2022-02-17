@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\CommandRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -78,12 +79,36 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/account', name: 'account', methods: ['GET'])]
+    #[Route('/account', name: 'user_account', methods: ['GET'])]
     public function account(UserRepository $ur): Response
     {
         $user_id = $this->getUser()->getUserIdentifier();
         return $this->render('user/account.html.twig', [
             'user' => $ur->findOneBy(['email' => $user_id]),
+        ]);
+    }
+
+    #[Route('/commands', name: 'user_commands', methods: ['GET'])]
+    public function commands(UserRepository $ur): Response
+    {
+        $user_id = $this->getUser()->getUserIdentifier(); // Get user
+        $commands = $ur->findOneBy(['email' => $user_id])->getCommands(); // Get all commands
+        foreach ($commands as $command) { // foreach command : get commandlines
+            $command['commandlines'] = $command->getCommandLines();
+        }
+        return $this->render('command/index.html.twig', [
+            'commands' => $commands,
+        ]);
+    }
+
+    #[Route('/command/{id}', name: 'user_command', methods: ['GET'])]
+    public function command(CommandRepository $cr, int $id): Response
+    {
+        $command = $cr->findOneBy(['id' => $id]); // command
+        $command_lines = $command->getCommandLines();
+        return $this->render('command/show.html.twig', [
+            'command' => $command,
+            'command_lines' => $command_lines,
         ]);
     }
 }

@@ -103,4 +103,12 @@ class Command
 
         return $this;
     }
+    public function getTotal(): float
+    {
+        $sum = 0.0;
+        foreach ($this->getCommandLines() as $cl) {
+            $sum += $cl->getPrice();
+        }
+        return $sum;
+    }
 }
