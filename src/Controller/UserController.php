@@ -89,15 +89,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/commands', name: 'user_commands', methods: ['GET'])]
-    public function commands(UserRepository $ur): Response
+    public function commands(CommandRepository $cr, UserRepository $ur): Response
     {
-        $user_id = $this->getUser()->getUserIdentifier(); // Get user
-        $commands = $ur->findOneBy(['email' => $user_id])->getCommands(); // Get all commands
-        foreach ($commands as $command) { // foreach command : get commandlines
-            $command['commandlines'] = $command->getCommandLines();
-        }
+        $user_email = $this->getUser()->getUserIdentifier(); // Get user email
+        $commands = $cr->findBy(['user' => $ur->findOneBy(['email' => $user_email])->getId()]); // Get all commands by user (user by email)
         return $this->render('command/index.html.twig', [
-            'commands' => $commands,
+            'commands' => $commands
         ]);
     }
 
