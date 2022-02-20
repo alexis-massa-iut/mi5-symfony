@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-
-<title>Edit Product</title>
+{% extends 'common/base.html.twig' %}
+{% block title %}Edit product
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Product</h1>
-
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+	<h1>Edit Product</h1> {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
 
 
-
-    
 {% endblock %}

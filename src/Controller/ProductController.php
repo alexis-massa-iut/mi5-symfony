@@ -14,11 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/{_locale}/product', requirements: ['_locale' => '%app.supported_locales%'])]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    #[Route('/', name: 'product_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
-        return $this->render('product/index.html.twig', [
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('product/index.html.twig', [
             'products' => $productRepository->findAll(),
+            'form' => $form,
         ]);
     }
 

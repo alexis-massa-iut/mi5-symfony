@@ -1,39 +1,43 @@
 {% extends 'common/base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Category index
+{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+	<h1>Category index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Img</th>
-                <th>Text</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.img }}</td>
-                <td>{{ category.text }}</td>
-                <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="text-center">Id</th>
+				<th class="text-center">Name</th>
+				<th class="text-center">Img</th>
+				<th class="text-center">Text</th>
+				<th class="text-center">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+				<tr>
+					<td>{{ category.id }}</td>
+					<td>{{ category.name }}</td>
+					<td>{{ category.img }}</td>
+					<td>{{ category.text }}</td>
+					<td class="text-center">
+						<a class="btn btn-light" href="{{ path('category_edit', {'id': category.id}) }}">
+							<i class="bi bi-pencil-square"></i>Edit</a> {{include('category/_delete_form.html.twig',{'id': category.id})}}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
 
-    <a href="{{ path('category_new') }}">Create new</a>
+		</tbody>
+		<tfoot>
+			<tr> {{ include('category/new.html.twig') }}</tr>
+		</tfoot>
+	</table>
+
 {% endblock %}

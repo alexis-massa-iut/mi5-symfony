@@ -1,4 +1,8 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-light">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<td></td>
+<td>{{ form_row(form.name) }}</td>
+<td>{{ form_row(form.img) }}</td>
+<td>{{ form_row(form.text) }}</td>
+<td class="text-center">
+	<button class="btn btn-primary">{{ button_label|default('Add') }}</button>
+</td> {{ form_end(form) }}

@@ -14,11 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/{_locale}/category', requirements: ['_locale' => '%app.supported_locales%'])]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository): Response
+    #[Route('/', name: 'category_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
-        return $this->render('category/index.html.twig', [
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('category/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
+            'form' => $form,
         ]);
     }
 
