@@ -13,7 +13,7 @@ class CommandLineType extends AbstractType
     {
         $builder
             ->add('amount')
-            ->add('price')
+            ->add('price', NumberType::class)
             ->add('command')
             ->add('product')
         ;

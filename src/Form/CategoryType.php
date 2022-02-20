@@ -14,7 +14,7 @@ class CategoryType extends AbstractType
         $builder
             ->add('name')
             ->add('img')
-            ->add('text')
+            ->add('text', TextareaType::class)
         ;
     }
 
