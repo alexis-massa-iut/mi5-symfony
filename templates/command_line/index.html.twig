@@ -2,15 +2,17 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th>Product</th>
 				<th>Amount</th>
 				<th>Price</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for command_line in command_lines %}
+			{% for command_line in command.commandlines %}
 				<tr>
+					<td>{{ command_line.product.name }}</td>
 					<td>{{ command_line.amount }}</td>
-					<td>{{ command_line.price }}</td>
+					<td>{{ command_line.price }}€</td>
 				</tr>
 			{% else %}
 				<tr>

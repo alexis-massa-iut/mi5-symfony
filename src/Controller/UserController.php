@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\CommandLineRepository;
 use App\Repository\CommandRepository;
+use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -89,23 +91,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/commands', name: 'user_commands', methods: ['GET'])]
-    public function commands(CommandRepository $cr, UserRepository $ur): Response
+    public function commands(CommandRepository $cr, CommandLineRepository $clr, ProductRepository $pr, UserRepository $ur): Response
     {
         $user_email = $this->getUser()->getUserIdentifier(); // Get user email
         $commands = $cr->findBy(['user' => $ur->findOneBy(['email' => $user_email])->getId()]); // Get all commands by user (user by email)
-        return $this->render('command/index.html.twig', [
-            'commands' => $commands
-        ]);
+        return $this->render('command/index.html.twig', ['commands' => $commands]);
     }
 
     #[Route('/command/{id}', name: 'user_command', methods: ['GET'])]
     public function command(CommandRepository $cr, int $id): Response
     {
         $command = $cr->findOneBy(['id' => $id]); // command
-        $command_lines = $command->getCommandLines();
-        return $this->render('command/show.html.twig', [
-            'command' => $command,
-            'command_lines' => $command_lines,
-        ]);
+        return $this->render('command/show.html.twig', ['command' => $command,]);
     }
 }
