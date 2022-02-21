@@ -34,8 +34,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($ur->findOneBy(['user' => $user])) {
-                $this->addFlash('error', 'Email already used');
+            if ($ur->findOneBy(['email' => $user->getEmail()])) {
                 return $this->redirect($request->headers->get('referer'));
             }
             $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());

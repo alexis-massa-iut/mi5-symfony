@@ -23,11 +23,12 @@ class CartService
     private $em; // EntityManager
     // so $this->cart[$i] = amount of product with id = $i
     // Constructor
-    public function __construct(SessionInterface $session, ShopController $shop, EntityManagerInterface $em)
+    public function __construct(SessionInterface $session, ShopController $shop, EntityManagerInterface $em, MailService $ms)
     {
-        // Get shop and session service
+        // Get services
         $this->shop = $shop;
         $this->session = $session;
+        $this->ms = $ms;
         // Get EntityManager
         $this->em = $em;
         // Get cart if exists, else initialize
@@ -153,9 +154,10 @@ class CartService
 
         if (empty($this->cart)) return null; // abort if cart is empty
 
-        $command = new Command();
+        $user = $this->em->getRepository(User::class)->find(($idUser)); // getuser
+        $command = new Command(); // create command
         $command->setDate(new DateTime('now', new DateTimeZone('Europe/Paris'))) // Add datetime
-            ->setUser($this->em->getRepository(User::class)->find(($idUser))) // Add user
+            ->setUser($user) // Add user
             ->setStatus("Pending"); // Add status "waiting for confirmation"
 
         $this->em->persist($command); // Persist command
@@ -175,7 +177,8 @@ class CartService
             $command->addCommandLine($cl); // Add commandLine to Command
         }
 
-        // TODO : send confirmation email ?
+        // TODO : send confirmation email 
+        $this->ms->sendEmail($user, $command); // confirmation email
 
         return $command;
     }

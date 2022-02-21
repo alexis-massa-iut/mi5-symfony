@@ -1,4 +1,5 @@
-{% extends "common/base.html.twig" %}
+{{if nonav}} {{else}}
+		{% extends "common/base.html.twig" %} {{endif}}
 {% block body %}
 	<h1>
 		Command: {{ command.date ? command.date|date('Y-m-d H:i:s') : '' }}
